@@ -6,7 +6,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 function SearchBar() {
   const [placeSearch, setPlaceSearch] = useState("");
-//   const [hotelSearch, setHotelSearch] = useState("");
+  const [hotelSearch, setHotelSearch] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
   const { setPlaces, setLoading } = useContext(PlaceContext);
 
@@ -28,23 +28,23 @@ function SearchBar() {
     }
   };
 
-  // const searchHotel = async (e) => {
-  //     clearTimeout(searchTimeout);
-  //     setHotelSearch(e.target.value);
+  const searchHotel = async (e) => {
+    clearTimeout(searchTimeout);
+    setHotelSearch(e.target.value);
 
-  //     if (placeSearch.trimStart() !== '') {
-  //     setLoading(true);
-  //     setSearchTimeout(
-  //         setTimeout(async () => {
-  //         const { data } = await axiosConnect.get(
-  //             `/places/search/${placeSearch.trimStart()}`
-  //         );
-  //         setPlaces(data);
-  //         setLoading(false);
-  //         }, 500)
-  //     );
-  //     }
-  // };
+    if (hotelSearch.trimStart() !== "") {
+      setLoading(true);
+      setSearchTimeout(
+        setTimeout(async () => {
+          const { data } = await axiosConnect.get(
+            `/places/searchhotel/${hotelSearch.trimStart()}`
+          );
+          setPlaces(data);
+          setLoading(false);
+        }, 500)
+      );
+    }
+  };
 
   return (
     <div>
@@ -59,9 +59,15 @@ function SearchBar() {
             onChange={(e) => searchPlace(e)}
           />
           <div className="vr vr-line ver-line"></div>
-          {/* <input type="text" className="form-control header-inp-bar" id="username" placeholder="Any week" 
-                            value={hotelSearch} onChange={(e) => searchHotel(e)}/> */}
-          <label style={{ padding: "10px" }}>Any week</label>
+          <input
+            type="text"
+            className="form-control header-inp-bar"
+            id="username"
+            placeholder="Any Hotel"
+            value={hotelSearch}
+            onChange={(e) => searchHotel(e)}
+          />
+          {/* <label style={{ padding: "10px" }}>Any week</label> */}
           <div className="vr vr-line ver-line"></div>
           <label>Add Guests</label>
           <button className="btn-search" onClick={searchPlace}>
